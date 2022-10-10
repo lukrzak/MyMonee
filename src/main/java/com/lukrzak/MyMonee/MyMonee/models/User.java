@@ -5,13 +5,13 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
 @Setter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
 public class User {
 
     @Id
