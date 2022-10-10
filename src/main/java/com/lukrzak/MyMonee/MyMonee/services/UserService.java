@@ -5,6 +5,8 @@ import com.lukrzak.MyMonee.MyMonee.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -22,6 +24,10 @@ public class UserService {
     public void changeUserBalance(User user, double changedValue){
         user.setBalance(user.getBalance() + changedValue);
         userRepository.save(user);
+    }
+
+    public Optional<User> getUserById(Long id){
+        return userRepository.findById(id);
     }
 
 }

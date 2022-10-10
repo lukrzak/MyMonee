@@ -1,6 +1,5 @@
 package com.lukrzak.MyMonee.MyMonee.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lukrzak.MyMonee.MyMonee.dto.ChangeBalance;
 import com.lukrzak.MyMonee.MyMonee.models.User;
 import com.lukrzak.MyMonee.MyMonee.services.UserService;
@@ -8,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,9 +20,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
-    public String test(){
-        return "Test";
+    @GetMapping("/users/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public Optional<User> getUserById(@PathVariable Long id){
+        return userService.getUserById(id);
     }
 
     @PostMapping("/users")
@@ -34,8 +34,7 @@ public class UserController {
 
     @PostMapping("/users/change-balance")
     @ResponseStatus(code = HttpStatus.OK)
-    public void changeUserBalance(@RequestBody ChangeBalance changeBalance) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+    public void changeUserBalance(@RequestBody ChangeBalance changeBalance){
         User user = changeBalance.getUser();
         double changedValue = changeBalance.getBalance();
         userService.changeUserBalance(user, changedValue);

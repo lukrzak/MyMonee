@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lukrzak.MyMonee.MyMonee.models.User;
 import com.lukrzak.MyMonee.MyMonee.repositories.UserRepository;
 import org.json.JSONObject;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -64,8 +67,11 @@ class MyMoneeApplicationTests {
 				.put("balance", 10.40)
 				.toString();
 
-		this.mvc.perform(MockMvcRequestBuilders.post("/api/v1/users/change-balance").contentType(MediaType.APPLICATION_JSON).content(jsonRequest))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.balance").value(110.53));
+		MvcResult res= this.mvc.perform(MockMvcRequestBuilders.post("/api/v1/users").contentType(MediaType.APPLICATION_JSON).content(userRequest))
+				.andExpect(status().isCreated())
+				.andDo(result -> MockMvcRequestBuilders.post("/api/v1/users/change-balance").contentType(MediaType.APPLICATION_JSON).content(jsonRequest))
+				.andReturn();
+
 	}
 
 }
