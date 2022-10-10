@@ -17,7 +17,7 @@ import java.util.Date;
 @Table(name = "expenses")
 public class Expense {
 
-    public Expense(String name, Categories category, String model, String placeOfPurchase, double price, int quantity, Date date) {
+    public Expense(String name, Categories category, String model, String placeOfPurchase, double price, int quantity, Date date, User user) {
         this.name = name;
         this.category = category;
         this.model = model;
@@ -25,6 +25,7 @@ public class Expense {
         this.price = price;
         this.quantity = quantity;
         this.date = date;
+        this.user = user;
     }
 
     @Id
@@ -38,4 +39,7 @@ public class Expense {
     private double price;
     private int quantity;
     private Date date;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
