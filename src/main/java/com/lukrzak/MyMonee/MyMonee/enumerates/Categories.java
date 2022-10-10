@@ -1,4 +1,4 @@
-package com.lukrzak.MyMonee.MyMonee;
+package com.lukrzak.MyMonee.MyMonee.enumerates;
 
 public enum Categories {
     FOOD,
