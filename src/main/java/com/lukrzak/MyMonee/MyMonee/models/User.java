@@ -1,14 +1,12 @@
 package com.lukrzak.MyMonee.MyMonee.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Getter
 @Setter
 @Entity
@@ -20,6 +18,7 @@ public class User {
     private Long id;
     private String name;
     private String surname;
-    private float balance;
+    private double balance;
+
 
 }
