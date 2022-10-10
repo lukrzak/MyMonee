@@ -12,5 +12,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ChangeBalance {
     private User user;
-    private double balance;
+    private double changedBalance;
 }

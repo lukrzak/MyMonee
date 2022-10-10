@@ -36,7 +36,7 @@ public class UserController {
     @ResponseStatus(code = HttpStatus.OK)
     public void changeUserBalance(@RequestBody ChangeBalance changeBalance){
         User user = changeBalance.getUser();
-        double changedValue = changeBalance.getBalance();
+        double changedValue = changeBalance.getChangedBalance();
         userService.changeUserBalance(user, changedValue);
     }
 }

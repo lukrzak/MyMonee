@@ -1,5 +1,6 @@
 package com.lukrzak.MyMonee.MyMonee.models;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,10 +16,10 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
-    private String surname;
-    private double balance;
+    @NotNull private Long id;
+    @NotNull private String name;
+    @NotNull private String surname;
+    @NotNull private double balance;
 
     public User(String name, String surname, double balance) {
         this.name = name;
