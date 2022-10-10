@@ -20,5 +20,9 @@ public class User {
     private String surname;
     private double balance;
 
-
+    public User(String name, String surname, double balance) {
+        this.name = name;
+        this.surname = surname;
+        this.balance = balance;
+    }
 }
