@@ -1,6 +1,7 @@
 package com.lukrzak.MyMonee.MyMonee.services;
 
 import com.lukrzak.MyMonee.MyMonee.enumerations.Categories;
+import com.lukrzak.MyMonee.MyMonee.exceptions.UserDoesntHaveEnoughMoneyException;
 import com.lukrzak.MyMonee.MyMonee.export.ExcelReport;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
 import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
@@ -74,6 +75,9 @@ public class ExpenseService {
     }
 
     public void addExpense(Expense expense){
+        if(expense.getUser().getBalance() - expense.getPrice() < 0){
+            throw new UserDoesntHaveEnoughMoneyException();
+        }
         userService.changeUserBalance(expense.getUser(), -expense.getPrice());
         expenseRepository.save(expense);
     }
