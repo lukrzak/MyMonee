@@ -33,13 +33,18 @@ public class ExpenseService {
         List<Categories> usersUsedCategories = expenseRepository.getUsersUsedCategories(id);
         List<String> suggestions = new ArrayList<>();
 
-        // TODO remove suggestion that references to itself
         for(Categories categories : usersUsedCategories){
             Expense lowestPrice = getCheapestExpenseOfCategory(allExpenses, categories);
-            List<Expense> moreExpensiveExpenses = getMoreExpensiveExpensesOfCategory(allExpenses, categories);
+            List<Expense> moreExpensivePurchases = getMoreExpensiveExpensesOfCategory(allExpenses, categories, lowestPrice);
+
             StringBuilder suggestion = new StringBuilder(lowestPrice.getName() + " " + lowestPrice.getModel() + " is cheaper compared to ");
-            for(Expense expense : moreExpensiveExpenses){
-                suggestion.append(expense.getName()).append(" ").append(expense.getModel()).append(", ");
+            if(moreExpensivePurchases.size() == 0){
+                suggestion = new StringBuilder(lowestPrice.getName() + " " + lowestPrice.getModel() + " is best purchase so far in " + lowestPrice.getCategory() + " category");
+            }
+            else {
+                for(Expense expense : moreExpensivePurchases){
+                    suggestion.append(expense.getName()).append(" ").append(expense.getModel()).append(", ");
+                }
             }
             suggestions.add(String.valueOf(suggestion));
         }
@@ -54,9 +59,10 @@ public class ExpenseService {
                 .orElse(null);
     }
 
-    public List<Expense> getMoreExpensiveExpensesOfCategory(List<Expense> allExpenses, Categories categories){
+    public List<Expense> getMoreExpensiveExpensesOfCategory(List<Expense> allExpenses, Categories categories, Expense cheapestExpense){
         return allExpenses.stream()
                 .filter(expense -> expense.getCategory().equals(categories))
+                .filter(expense -> !expense.equals(cheapestExpense))
                 .toList();
     }
 
