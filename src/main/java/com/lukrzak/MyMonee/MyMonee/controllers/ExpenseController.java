@@ -34,9 +34,9 @@ public class ExpenseController {
         expenseService.deleteExpense(id);
     }
 
-    @GetMapping("/expenses/suggestions")
-    public List<Expense> getReplacementSuggestions(){
-        return expenseService.getSuggestedReplacements();
+    @GetMapping("/expenses/suggestions/{id}")
+    public List<Expense> getReplacementSuggestions(@PathVariable Long id){
+        return expenseService.getSuggestedReplacementsForUser(id);
     }
 
     @GetMapping("/expenses")

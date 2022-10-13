@@ -7,7 +7,8 @@ import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ExpenseService {
@@ -24,12 +25,27 @@ public class ExpenseService {
     }
 
     //TODO
-    public List<Expense> getSuggestedReplacements(){
-        List<Expense> allExpenses = expenseRepository.findAll();
-        return null;
+    public List<Expense> getSuggestedReplacementsForUser(Long id){
+        List<Expense> allExpenses = expenseRepository.getSuggestedReplacementsForUser(id);
+        List<Categories> usersUsedCategories = expenseRepository.getUsersUsedCategories(id);
+        List<Expense> lowestPrices = new ArrayList<>();
+
+        for(Categories categories : usersUsedCategories){
+            lowestPrices.add(getCheapestProductOfCategory(allExpenses, categories));
+        }
+
+        return lowestPrices;
     }
 
-    //TODO
+    public Expense getCheapestProductOfCategory(List<Expense> allExpenses, Categories categories){
+        Expense cheapestProductOfCategory;
+        cheapestProductOfCategory = allExpenses.stream()
+                .filter(expense -> expense.getCategory().equals(categories))
+                .min(Comparator.comparing(Expense::getPrice))
+                .orElse(null);
+        return cheapestProductOfCategory;
+    }
+
     public List<Expense> getExpensesOfCategoryInOrder(Categories category){
         return expenseRepository.getExpensesOfCategoryInOrder(category);
     }
