@@ -1,11 +1,13 @@
 package com.lukrzak.MyMonee.MyMonee.services;
 
 import com.lukrzak.MyMonee.MyMonee.enumerations.Categories;
+import com.lukrzak.MyMonee.MyMonee.export.ExcelReport;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
 import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -13,11 +15,13 @@ public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
     private final UserService userService;
+    private final ExcelReport excelReport;
 
     @Autowired
-    public ExpenseService(ExpenseRepository expenseRepository, UserService userService) {
+    public ExpenseService(ExpenseRepository expenseRepository, UserService userService, ExcelReport excelReport) {
         this.expenseRepository = expenseRepository;
         this.userService = userService;
+        this.excelReport = excelReport;
     }
 
     public List<Expense> getAllUserExpenses(Long id){
@@ -56,6 +60,10 @@ public class ExpenseService {
 
     public void deleteExpense(Long id){
         expenseRepository.deleteById(id);
+    }
+
+    public void generateReport() throws IOException {
+        excelReport.generateReport();
     }
 
 }

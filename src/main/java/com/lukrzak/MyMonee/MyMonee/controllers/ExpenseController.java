@@ -6,6 +6,7 @@ import com.lukrzak.MyMonee.MyMonee.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -42,5 +43,10 @@ public class ExpenseController {
     @GetMapping("/expenses")
     public List<Expense> getExpensesOfCategoryInOrder(@RequestParam(value="category") String categories){
         return expenseService.getExpensesOfCategoryInOrder(Categories.valueOf(String.valueOf(categories)));
+    }
+
+    @GetMapping("/expenses/report")
+    public void generateReport() throws IOException {
+        expenseService.generateReport();
     }
 }

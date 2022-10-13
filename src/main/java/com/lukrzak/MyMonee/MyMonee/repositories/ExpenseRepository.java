@@ -20,4 +20,8 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     @Query(value = "SELECT DISTINCT category FROM expenses WHERE user_id = ?1", nativeQuery = true)
     List<Categories> getUsersUsedCategories(Long id);
+
+    @Query(value = "SELECT expenses.name, expenses.model, expenses.category, expenses.price, expenses.quantity, expenses.date," +
+            " users.name AS username FROM expenses LEFT JOIN users ON expenses.user_id=users.id", nativeQuery = true)
+    List<Object[]> getDataForExcelReport();
 }
