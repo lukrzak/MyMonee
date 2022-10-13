@@ -31,8 +31,12 @@ public class ExpenseService {
     public List<String> getSuggestedReplacementsForUser(Long id){
         List<Expense> allExpenses = expenseRepository.getSuggestedReplacementsForUser(id);
         List<Categories> usersUsedCategories = expenseRepository.getUsersUsedCategories(id);
-        List<String> suggestions = new ArrayList<>();
 
+        return getSuggestions(allExpenses, usersUsedCategories);
+    }
+
+    public List<String> getSuggestions(List<Expense> allExpenses, List<Categories> usersUsedCategories){
+        List<String> suggestions = new ArrayList<>();
         for(Categories categories : usersUsedCategories){
             Expense lowestPrice = getCheapestExpenseOfCategory(allExpenses, categories);
             List<Expense> moreExpensivePurchases = getMoreExpensiveExpensesOfCategory(allExpenses, categories, lowestPrice);
@@ -48,7 +52,6 @@ public class ExpenseService {
             }
             suggestions.add(String.valueOf(suggestion));
         }
-
         return suggestions;
     }
 
