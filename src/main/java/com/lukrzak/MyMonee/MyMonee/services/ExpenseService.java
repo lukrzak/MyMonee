@@ -2,13 +2,11 @@ package com.lukrzak.MyMonee.MyMonee.services;
 
 import com.lukrzak.MyMonee.MyMonee.enumerates.Categories;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
-import com.lukrzak.MyMonee.MyMonee.models.User;
 import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ExpenseService {
@@ -31,13 +29,13 @@ public class ExpenseService {
         List<Expense> lowestPrices = new ArrayList<>();
 
         for(Categories categories : usersUsedCategories){
-            lowestPrices.add(getCheapestProductOfCategory(allExpenses, categories));
+            lowestPrices.add(getCheapestExpenseOfCategory(allExpenses, categories));
         }
 
         return lowestPrices;
     }
 
-    public Expense getCheapestProductOfCategory(List<Expense> allExpenses, Categories categories){
+    public Expense getCheapestExpenseOfCategory(List<Expense> allExpenses, Categories categories){
         Expense cheapestProductOfCategory;
         cheapestProductOfCategory = allExpenses.stream()
                 .filter(expense -> expense.getCategory().equals(categories))
