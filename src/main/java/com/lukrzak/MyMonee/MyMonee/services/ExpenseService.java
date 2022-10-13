@@ -2,6 +2,7 @@ package com.lukrzak.MyMonee.MyMonee.services;
 
 import com.lukrzak.MyMonee.MyMonee.enumerates.Categories;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
+import com.lukrzak.MyMonee.MyMonee.models.User;
 import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import java.util.*;
 public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
+    private final UserService userService;
 
     @Autowired
-    public ExpenseService(ExpenseRepository expenseRepository) {
+    public ExpenseService(ExpenseRepository expenseRepository, UserService userService) {
         this.expenseRepository = expenseRepository;
+        this.userService = userService;
     }
 
     public List<Expense> getAllUserExpenses(Long id){
@@ -49,6 +52,7 @@ public class ExpenseService {
     }
 
     public void addExpense(Expense expense){
+        userService.changeUserBalance(expense.getUser(), -expense.getPrice());
         expenseRepository.save(expense);
     }
 

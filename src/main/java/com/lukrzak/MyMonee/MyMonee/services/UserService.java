@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public void changeUserBalance(User user, double changedValue){
-        user.setBalance(Math.round(user.getBalance() + changedValue * 100) / 100);
+        user.setBalance(user.getBalance() + changedValue);
         userRepository.save(user);
     }
 
