@@ -2,7 +2,6 @@ package com.lukrzak.MyMonee.MyMonee.controllers;
 
 import com.lukrzak.MyMonee.MyMonee.enumerates.Categories;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
-import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
 import com.lukrzak.MyMonee.MyMonee.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,6 @@ public class ExpenseController {
     @GetMapping("/expenses/{id}")
     public List<Expense> getUserExpenses(@PathVariable Long id){
         return expenseService.getAllUserExpenses(id);
-        //return null;
     }
 
     @PostMapping("/expenses")
@@ -41,8 +39,8 @@ public class ExpenseController {
         return expenseService.getSuggestedReplacements();
     }
 
-    @GetMapping("/expenses/{category}")
-    public List<Expense> getExpensesOfCategoryInOrder(@PathVariable Categories categories){
-        return expenseService.getExpensesOfCategoryInOrder(categories);
+    @GetMapping("/expenses")
+    public List<Expense> getExpensesOfCategoryInOrder(@RequestParam(value="category") String categories){
+        return expenseService.getExpensesOfCategoryInOrder(Categories.valueOf(String.valueOf(categories)));
     }
 }

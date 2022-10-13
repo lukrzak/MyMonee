@@ -17,14 +17,13 @@ import java.util.Date;
 @Table(name = "expenses")
 public class Expense {
 
-    public Expense(String name, Categories category, String model, String placeOfPurchase, double price, int quantity, Date date, User user) {
+    public Expense(String name, Categories category, String model, String placeOfPurchase, double price, int quantity, User user) {
         this.name = name;
         this.category = category;
         this.model = model;
         this.placeOfPurchase = placeOfPurchase;
         this.price = price;
         this.quantity = quantity;
-        this.date = date;
         this.user = user;
     }
 
@@ -38,6 +37,7 @@ public class Expense {
     private String placeOfPurchase;
     private double price;
     private int quantity;
+    @Temporal(TemporalType.DATE)
     private Date date;
     @ManyToOne
     @JoinColumn(name = "user_id")

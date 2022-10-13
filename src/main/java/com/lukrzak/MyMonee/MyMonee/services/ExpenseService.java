@@ -19,31 +19,27 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;
     }
 
-    public List<Expense> getAllUserExpenses(User user){
-        return expenseRepository.getAllUsersExpenses(user.getId());
-    }
-
     public List<Expense> getAllUserExpenses(Long id){
         return expenseRepository.getAllUsersExpenses(id);
     }
 
     //TODO
-    public List<Expense> suggestReplacement(){
+    public List<Expense> getSuggestedReplacements(){
         List<Expense> allExpenses = expenseRepository.findAll();
         return null;
     }
 
     //TODO
     public List<Expense> getExpensesOfCategoryInOrder(Categories category){
-        return List.of();
+        return expenseRepository.getExpensesOfCategoryInOrder(category);
     }
 
     public void addExpense(Expense expense){
         expenseRepository.save(expense);
     }
 
-    public void deleteExpense(Expense expense){
-        expenseRepository.delete(expense);
+    public void deleteExpense(Long id){
+        expenseRepository.deleteById(id);
     }
 
 }
