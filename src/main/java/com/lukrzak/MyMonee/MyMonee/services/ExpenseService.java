@@ -1,6 +1,6 @@
 package com.lukrzak.MyMonee.MyMonee.services;
 
-import com.lukrzak.MyMonee.MyMonee.enumerations.Categories;
+import com.lukrzak.MyMonee.MyMonee.dto.enumerations.Categories;
 import com.lukrzak.MyMonee.MyMonee.export.ExcelReport;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
 import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
@@ -28,25 +28,36 @@ public class ExpenseService {
         return expenseRepository.getAllUsersExpenses(id);
     }
 
-    public List<Expense> getSuggestedReplacementsForUser(Long id){
+    public List<String> getSuggestedReplacementsForUser(Long id){
         List<Expense> allExpenses = expenseRepository.getSuggestedReplacementsForUser(id);
         List<Categories> usersUsedCategories = expenseRepository.getUsersUsedCategories(id);
-        List<Expense> lowestPrices = new ArrayList<>();
+        List<String> suggestions = new ArrayList<>();
 
+        // TODO remove suggestion that references to itself
         for(Categories categories : usersUsedCategories){
-            lowestPrices.add(getCheapestExpenseOfCategory(allExpenses, categories));
+            Expense lowestPrice = getCheapestExpenseOfCategory(allExpenses, categories);
+            List<Expense> moreExpensiveExpenses = getMoreExpensiveExpensesOfCategory(allExpenses, categories);
+            StringBuilder suggestion = new StringBuilder(lowestPrice.getName() + " " + lowestPrice.getModel() + " is cheaper compared to ");
+            for(Expense expense : moreExpensiveExpenses){
+                suggestion.append(expense.getName()).append(" ").append(expense.getModel()).append(", ");
+            }
+            suggestions.add(String.valueOf(suggestion));
         }
 
-        return lowestPrices;
+        return suggestions;
     }
 
     public Expense getCheapestExpenseOfCategory(List<Expense> allExpenses, Categories categories){
-        Expense cheapestProductOfCategory;
-        cheapestProductOfCategory = allExpenses.stream()
+        return allExpenses.stream()
                 .filter(expense -> expense.getCategory().equals(categories))
                 .min(Comparator.comparing(Expense::getPrice))
                 .orElse(null);
-        return cheapestProductOfCategory;
+    }
+
+    public List<Expense> getMoreExpensiveExpensesOfCategory(List<Expense> allExpenses, Categories categories){
+        return allExpenses.stream()
+                .filter(expense -> expense.getCategory().equals(categories))
+                .toList();
     }
 
     public List<Expense> getExpensesOfCategoryInOrder(Categories category){

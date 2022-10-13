@@ -1,6 +1,6 @@
 package com.lukrzak.MyMonee.MyMonee.repositories;
 
-import com.lukrzak.MyMonee.MyMonee.enumerations.Categories;
+import com.lukrzak.MyMonee.MyMonee.dto.enumerations.Categories;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
