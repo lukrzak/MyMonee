@@ -1,6 +1,6 @@
 package com.lukrzak.MyMonee.MyMonee.controllers;
 
-import com.lukrzak.MyMonee.MyMonee.dto.enumerations.Categories;
+import com.lukrzak.MyMonee.MyMonee.enumerations.Categories;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
 import com.lukrzak.MyMonee.MyMonee.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
