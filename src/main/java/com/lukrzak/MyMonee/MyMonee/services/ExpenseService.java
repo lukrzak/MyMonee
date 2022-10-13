@@ -1,8 +1,7 @@
 package com.lukrzak.MyMonee.MyMonee.services;
 
-import com.lukrzak.MyMonee.MyMonee.enumerates.Categories;
+import com.lukrzak.MyMonee.MyMonee.enumerations.Categories;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
-import com.lukrzak.MyMonee.MyMonee.models.User;
 import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,6 @@ public class ExpenseService {
         return expenseRepository.getAllUsersExpenses(id);
     }
 
-    //TODO
     public List<Expense> getSuggestedReplacementsForUser(Long id){
         List<Expense> allExpenses = expenseRepository.getSuggestedReplacementsForUser(id);
         List<Categories> usersUsedCategories = expenseRepository.getUsersUsedCategories(id);

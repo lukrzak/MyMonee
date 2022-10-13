@@ -1,6 +1,6 @@
 package com.lukrzak.MyMonee.MyMonee.models;
 
-import com.lukrzak.MyMonee.MyMonee.enumerates.Categories;
+import com.lukrzak.MyMonee.MyMonee.enumerations.Categories;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
