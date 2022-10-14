@@ -42,4 +42,9 @@ public class Expense {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @PrePersist
+    private void addDateOnCreate(){
+        date = new Date();
+    }
 }

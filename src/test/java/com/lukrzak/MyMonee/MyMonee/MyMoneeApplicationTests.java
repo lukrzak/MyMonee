@@ -45,9 +45,12 @@ class MyMoneeApplicationTests {
 
 	@Test
 	void addUserShouldBeIsCreatedStatus() throws Exception {
-		User user = new User(1L, "test", "testt", 100.13f);
-		String jsonRequest = user.toString();
-		System.out.println(jsonRequest);
+		String jsonRequest = new JSONObject()
+				.put("name", "test2")
+				.put("surname", "testt")
+				.put("balance", 100.13f)
+				.toString();
+
 		this.mvc.perform(MockMvcRequestBuilders.post("/api/v1/users").contentType(MediaType.APPLICATION_JSON).content(jsonRequest))
 				.andExpect(status().isCreated());
 	}
