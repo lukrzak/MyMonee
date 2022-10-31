@@ -22,7 +22,6 @@ public class ExpenseController {
     }
 
     @GetMapping("/expenses/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
     public List<Expense> getUserExpenses(@PathVariable Long id){
         return expenseService.getAllUserExpenses(id);
     }
@@ -34,26 +33,24 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/expenses/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
     public void deleteExpense(@PathVariable Long id){
         expenseService.deleteExpense(id);
     }
 
     @GetMapping("/expenses/suggestions/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
     public List<String> getReplacementSuggestions(@PathVariable Long id){
         return expenseService.getSuggestedReplacementsForUser(id);
     }
 
     @GetMapping("/expenses")
-    @ResponseStatus(code = HttpStatus.OK)
     public List<Expense> getExpensesOfCategoryInOrder(@RequestParam(value="category") String categories){
         return expenseService.getExpensesOfCategoryInOrder(Categories.valueOf(String.valueOf(categories)));
     }
 
     @GetMapping("/expenses/report")
-    @ResponseStatus(code = HttpStatus.OK)
     public void generateReport() throws IOException {
         expenseService.generateReport();
     }
+
+    
 }

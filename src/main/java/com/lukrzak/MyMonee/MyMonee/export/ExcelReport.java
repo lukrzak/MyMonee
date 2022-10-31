@@ -25,7 +25,7 @@ public class ExcelReport {
     private final int STARTING_ROW = 0;
     private final int NUMBER_OF_COLUMNS = 7;
     private final int PRICE_COLUMN_NUMBER = 3;
-    private final int QUANTITY_COLUMN_NUMBER = 3;
+    private final int QUANTITY_COLUMN_NUMBER = 4;
     private final String[] COLUMN_NAMES = {"Name", "Model", "Category", "Price", "Quantity", "Date", "User", "Total cost"};
 
     @Value("${dataExport.path}")

@@ -21,7 +21,6 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
     public Optional<User> getUserById(@PathVariable Long id){
         return userService.getUserById(id);
     }
@@ -33,7 +32,6 @@ public class UserController {
     }
 
     @PostMapping("/users/change-balance")
-    @ResponseStatus(code = HttpStatus.OK)
     public void changeUserBalance(@RequestBody ChangeBalance changeBalance){
         User user = changeBalance.getUser();
         double changedValue = changeBalance.getChangedBalance();
