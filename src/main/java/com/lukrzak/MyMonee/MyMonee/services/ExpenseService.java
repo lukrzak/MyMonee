@@ -5,9 +5,14 @@ import com.lukrzak.MyMonee.MyMonee.exceptions.UserDoesntHaveEnoughMoneyException
 import com.lukrzak.MyMonee.MyMonee.export.ExcelReport;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
 import com.lukrzak.MyMonee.MyMonee.repositories.ExpenseRepository;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
+import net.sourceforge.tess4j.util.LoadLibs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -17,6 +22,8 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final UserService userService;
     private final ExcelReport excelReport;
+    @Value("${tesseract.datapack.path}")
+    private String PATH;
 
     @Autowired
     public ExpenseService(ExpenseRepository expenseRepository, UserService userService, ExcelReport excelReport) {
@@ -88,6 +95,13 @@ public class ExpenseService {
 
     public void generateReport() throws IOException {
         excelReport.generateReport();
+    }
+
+    public void scanPhotoOfReceipt() throws TesseractException {
+        Tesseract tesseract = new Tesseract();
+        tesseract.setDatapath(PATH);
+        tesseract.setLanguage("eng");
+        System.out.println(tesseract.doOCR(new File(PATH + "\\test.png")));
     }
 
 }

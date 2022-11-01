@@ -3,6 +3,7 @@ package com.lukrzak.MyMonee.MyMonee.controllers;
 import com.lukrzak.MyMonee.MyMonee.enumerations.Categories;
 import com.lukrzak.MyMonee.MyMonee.models.Expense;
 import com.lukrzak.MyMonee.MyMonee.services.ExpenseService;
+import net.sourceforge.tess4j.TesseractException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +53,9 @@ public class ExpenseController {
         expenseService.generateReport();
     }
 
-    
+    @GetMapping("/expenses/scan")
+    public void scanPhotoOfReceipt() throws TesseractException {
+        expenseService.scanPhotoOfReceipt();
+    }
+
 }
