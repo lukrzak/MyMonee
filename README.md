@@ -6,7 +6,7 @@ Application for managing finances.
 - Generating .xlsx report.
 - Scanning receipts to read data.
 
-# Tech stak:
+# Tech stack:
 - Spring Boot
 - Hibernate & Spring JPA
 - PostgreSQL
